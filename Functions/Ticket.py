@@ -2,12 +2,19 @@ import requests
 from requests.auth import HTTPBasicAuth
 import json
 
+from configparser import ConfigParser
+
+config = ConfigParser()
+
+config.read("./.env")
+
 def createSubTask(parentIssueKey, scheduleTime, serverName):
     try: 
-        jira_url = "https://pasindub5gncomau.atlassian.net"
-        email = "pasindub5gncomau@gmail.com" 
-        api_token = "ATATT3xFfGF0nh336R7rdc0ELYkCqL-JbucZDPK9GUt_q6h74x-mxUKcztoWnn5IfYpZrhJpuGin31NSs4TE2gG28Ln0bmRTuZwe7UhOa2QAhw48MNQpykCAZt-dciFYF8I_nVejPYHnjsKQoRjGe6RsxsZYeGwH1JrHlzMTU1wdUfYQa-S4xbY=34739ECD"
 
+        jira_url = config.get("JIRA", "URL")
+        email = config.get("JIRA", "USERNAME")
+        api_token = config.get("JIRA", "API_KEY").strip('"')
+        
         subtaskData = {
             "fields": {
                 "project": {
@@ -51,6 +58,6 @@ def createSubTask(parentIssueKey, scheduleTime, serverName):
             print(f"INFO: Subtask created successfully for {serverName} - Issue Key: {response.json()['key']}")
         else:
             print(f"Failed to create subtask: {response.status_code}, {response.text}")
-            
+
     except Exception as e:
         print(f"ERROR: Failed to create subtasks - {e}")
