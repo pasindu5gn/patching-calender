@@ -15,7 +15,6 @@ def createSubTask(parentIssueKey, scheduleTime, serverName):
         email = config.get("JIRA", "USERNAME")
         api_token = config.get("JIRA", "API_KEY").strip('"')
         
-        
         subtaskData = {
             "fields": {
                 "project": {
