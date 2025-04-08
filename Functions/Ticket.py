@@ -14,34 +14,21 @@ def createSubTask(parentIssueKey, scheduleTime, serverName):
         jira_url = config.get("JIRA", "URL")
         email = config.get("JIRA", "USERNAME")
         api_token = config.get("JIRA", "API_KEY").strip('"')
-        
+        project_key = config.get("JIRA", "PROJECT_KEY")
+
         subtaskData = {
             "fields": {
-                "project": {
-                    "key": "SUP" 
-                },
-                "summary": f'Automox Manual Patching - {scheduleTime} - {serverName}',
+                "project": {"key": project_key},
+                "summary": f"Automox Manual Patching - {scheduleTime} - {serverName}",
                 "description": {
                     "type": "doc",
                     "version": 1,
                     "content": [
-                        {
-                            "type": "paragraph",
-                            "content": [
-                                {
-                                    "type": "text",
-                                    "text": ""
-                                }
-                            ]
-                        }
-                    ]
+                        {"type": "paragraph", "content": [{"type": "text", "text": ""}]}
+                    ],
                 },
-                "issuetype": {
-                    "name": "Sub-task"
-                },
-                "parent": {
-                    "key": parentIssueKey
-                }
+                "issuetype": {"name": "Sub-task"},
+                "parent": {"key": parentIssueKey},
             }
         }
 
